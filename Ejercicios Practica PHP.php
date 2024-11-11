@@ -1,5 +1,4 @@
 <?php
-
 $alumnos = [];
 
 function agregarAlumno(&$alumnos) {
