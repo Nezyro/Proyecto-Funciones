@@ -3,25 +3,21 @@
 $alumnos = [];
 
 function agregarAlumno(&$alumnos) {
-    echo "Nombre del alumno: ";
-    $nombre = trim(fgets(STDIN));
+    $nombre = readline("Nombre del alumno: ");
     
-    echo "Edad del alumno: ";
-    $edad = intval(fgets(STDIN));
+    $edad = intval(readline("Edad del alumno: "));
     if ($edad < 0) {
         echo "Error: La edad no puede ser negativa.\n";
         return;
     }
     
-    echo "Nota del alumno: ";
-    $nota = floatval(fgets(STDIN));
+    $nota = floatval(readline("Nota del alumno: "));
     if ($nota < 0 || $nota > 10) {
         echo "Error: La nota debe estar entre 0 y 10.\n";
         return;
     }
     
-    echo "Asistencias del alumno (en porcentaje): ";
-    $asistencias = floatval(fgets(STDIN));
+    $asistencias = floatval(readline("Asistencias del alumno (en porcentaje): "));
     
     $alumno = [
         "nombre" => $nombre,
@@ -64,16 +60,14 @@ function eliminarAlumno(&$alumnos, $nombreBuscado) {
 function actualizarAlumno(&$alumnos, $nombreBuscado) {
     foreach ($alumnos as &$alumno) {
         if (strtolower($alumno['nombre']) == strtolower($nombreBuscado)) {
-            echo "Nueva edad (actual: {$alumno['edad']}): ";
-            $edad = intval(fgets(STDIN));
+            $edad = intval(readline("Nueva edad (actual: {$alumno['edad']}): "));
             if ($edad >= 0) {
                 $alumno['edad'] = $edad;
             } else {
                 echo "Edad inválida.\n";
             }
 
-            echo "Nueva nota (actual: {$alumno['nota']}): ";
-            $nota = floatval(fgets(STDIN));
+            $nota = floatval(readline("Nueva nota (actual: {$alumno['nota']}): "));
             if ($nota >= 0 && $nota <= 10) {
                 $alumno['nota'] = $nota;
             } else {
@@ -129,6 +123,7 @@ function calcularMedianaNotas($alumnos) {
     echo "Mediana de las notas: $mediana\n";
 }
 
+// Función para buscar alumnos por rango de edad
 function buscarAlumnosPorRangoEdad($alumnos, $edadMin, $edadMax) {
     foreach ($alumnos as $alumno) {
         if ($alumno['edad'] >= $edadMin && $alumno['edad'] <= $edadMax) {
@@ -136,11 +131,10 @@ function buscarAlumnosPorRangoEdad($alumnos, $edadMin, $edadMax) {
         }
     }
 }
-ç
+
 do {
     echo "\nMenu:\n1. Agregar Alumno\n2. Mostrar Alumnos\n3. Buscar Alumno\n4. Eliminar Alumno\n5. Actualizar Alumno\n6. Estadísticas de Notas\n7. Mayor y Menor Edad\n8. Mediana de Notas\n9. Buscar por Rango de Edad\n0. Salir\n";
-    echo "Seleccione una opción: ";
-    $opcion = intval(fgets(STDIN));
+    $opcion = intval(readline("Seleccione una opción: "));
 
     switch ($opcion) {
         case 1:
@@ -150,16 +144,16 @@ do {
             mostrarAlumnos($alumnos);
             break;
         case 3:
-            echo "Nombre del alumno a buscar: ";
-            buscarAlumno($alumnos, trim(fgets(STDIN)));
+            $nombreBuscado = readline("Nombre del alumno a buscar: ");
+            buscarAlumno($alumnos, $nombreBuscado);
             break;
         case 4:
-            echo "Nombre del alumno a eliminar: ";
-            eliminarAlumno($alumnos, trim(fgets(STDIN)));
+            $nombreBuscado = readline("Nombre del alumno a eliminar: ");
+            eliminarAlumno($alumnos, $nombreBuscado);
             break;
         case 5:
-            echo "Nombre del alumno a actualizar: ";
-            actualizarAlumno($alumnos, trim(fgets(STDIN)));
+            $nombreBuscado = readline("Nombre del alumno a actualizar: ");
+            actualizarAlumno($alumnos, $nombreBuscado);
             break;
         case 6:
             calcularEstadisticasNotas($alumnos);
@@ -171,10 +165,8 @@ do {
             calcularMedianaNotas($alumnos);
             break;
         case 9:
-            echo "Edad mínima: ";
-            $edadMin = intval(fgets(STDIN));
-            echo "Edad máxima: ";
-            $edadMax = intval(fgets(STDIN));
+            $edadMin = intval(readline("Edad mínima: "));
+            $edadMax = intval(readline("Edad máxima: "));
             buscarAlumnosPorRangoEdad($alumnos, $edadMin, $edadMax);
             break;
         case 0:
